@@ -20,8 +20,8 @@ export function ComposantAccueil(e) {
     <div class="w-full h-[100vh] flex flex-row">
         <div class="sidebar w-[15%] h-full bg-white flex flex-col gap-16 border-2 border-fuchsia-900">
             <div class="logo w-full h-[10%] bg-white shadow-lg flex flex-row justify-center items-center transform hover:-translate-y-1 transition-transform duration-300">
-                <img src="img/logo-transparent.png" alt="" class="w-[60px]">
-                <img src="img/flower.jpeg" alt="" class="w-[30px]">
+                <img src="/img/logo-transparent.png" alt="" class="w-[60px]">
+                <img src="/img/flower.jpeg" alt="" class="w-[30px]">
             </div>
 
             <div class="iconeMenu w-full h-[60%] flex flex-col justify-center items-center gap-4">
