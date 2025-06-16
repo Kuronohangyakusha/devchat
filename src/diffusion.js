@@ -1,6 +1,6 @@
  
 
-const URL_MESSAGES = "http://localhost:3000/messages";
+const URL_MESSAGES = "https://devchat-jsi7.onrender.com/messages";
 
 let destinatairesSelectionnes = [];
 let modeDiffusionActif = false;

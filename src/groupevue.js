@@ -349,7 +349,7 @@ async function gererAjoutGroupe(formulaire, popup) {
 
 async function sauvegarderGroupe(groupe) {
     try {
-        const response = await fetch('http://localhost:3000/groupes', {
+        const response = await fetch('https://devchat-jsi7.onrender.com/groupes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -370,7 +370,7 @@ async function sauvegarderGroupe(groupe) {
 
 async function sauvegarderUtilisateur(utilisateur) {
     try {
-        const response = await fetch(`http://localhost:3000/utilisateurs/${utilisateur.id}`, {
+        const response = await fetch(`https://devchat-jsi7.onrender.com/utilisateurs/${utilisateur.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

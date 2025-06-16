@@ -1,5 +1,5 @@
 // archivage.js - Système d'archivage pour les conversations
-const URL_UTILISATEURS = "http://localhost:3000/utilisateurs";
+const URL_UTILISATEURS = "https://devchat-jsi7.onrender.com/utilisateurs";
 
 let conversationSelectionneeArchive = null;
 

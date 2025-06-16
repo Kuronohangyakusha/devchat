@@ -307,7 +307,7 @@ async function gererAjoutContactAvecPhoto(formulaire, popup) {
 }
 async function verifierUtilisateurExistant(telephone) {
     try {
-        const response = await fetch('http://localhost:3000/utilisateurs');
+        const response = await fetch('https://devchat-jsi7.onrender.com/utilisateurs');
         const utilisateurs = await response.json();
         
         return utilisateurs.find(user => user.telephone === telephone);
@@ -338,7 +338,7 @@ async function ajouterContactMutuel(utilisateurConnecte, autreUtilisateur) {
         autreUtilisateur.liste_contacts.push(contactMutuel);
         
         try {
-            const response = await fetch(`http://localhost:3000/utilisateurs/${autreUtilisateur.id}`, {
+            const response = await fetch(`https://devchat-jsi7.onrender.com/utilisateurs/${autreUtilisateur.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -382,7 +382,7 @@ async function creerNouvelUtilisateur(nom, telephone) {
     };
     
     try {
-        const response = await fetch('http://localhost:3001/utilisateurs', {
+        const response = await fetch('https://devchat-jsi7.onrender.com/utilisateurs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -443,7 +443,7 @@ async function sauvegarderUtilisateurs() {
     try {
         const utilisateurConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte'));
         
-        const response = await fetch(`http://localhost:3000/utilisateurs/${utilisateurConnecte.id}`, {
+        const response = await fetch(`https://devchat-jsi7.onrender.com/utilisateurs/${utilisateurConnecte.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

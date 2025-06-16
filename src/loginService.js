@@ -1,9 +1,9 @@
-const URL_UTILISATEURS = 'http://localhost:3000/utilisateurs';
-const URL_GROUPES = 'http://localhost:3000/groupes';
-const URL_MESSAGES = 'http://localhost:3000/messages'
-const URL_STATUTS = 'http://localhost:3000/statuts'
-const URL_APPELS = 'http://localhost:3000/appels'
-const URL_PARAMETRES_APPLICATION = 'http://localhost:3000/parametres_application'
+const URL_UTILISATEURS = 'https://devchat-jsi7.onrender.com/utilisateurs';
+const URL_GROUPES = 'https://devchat-jsi7.onrender.com/groupes';
+const URL_MESSAGES = 'https://devchat-jsi7.onrender.com/messages'
+const URL_STATUTS = 'https://devchat-jsi7.onrender.com/statuts'
+const URL_APPELS = 'https://devchat-jsi7.onrender.com/appels'
+const URL_PARAMETRES_APPLICATION = 'https://devchat-jsi7.onrender.com/parametres_application'
 
 
 export function validerEmail(email) {
