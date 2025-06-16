@@ -1,0 +1,1148 @@
+{
+  "utilisateurs": [
+    {
+      "id": "user_001",
+      "nom": "ndeye",
+      "telephone": "770689591",
+      "email": "nndeyendiaye85@gmail.com",
+      "password": "bonjour1",
+      "photo_profil": "https://example.com/photos/jean.jpg",
+      "statut": {
+        "texte": "Disponible pour discuter",
+        "date_modification": "2025-06-14T10:30:00Z",
+        "visible_pour": [
+          "tous",
+          "contacts",
+          "personne"
+        ]
+      },
+      "derniere_connexion": "2025-06-14T12:45:00Z",
+      "en_ligne": true,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": true
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_001",
+          "nom": "Marie Martin",
+          "telephone": "+33987654321",
+          "nom_personnalise": "Marie ❤️",
+          "bloque": false,
+          "favori": true,
+          "date_ajout": "2025-01-15T09:00:00Z",
+          "derniere_interaction": "2025-06-14T11:30:00Z"
+        },
+        {
+          "id": "contact_002",
+          "nom": "Pierre Durand",
+          "telephone": "+33456789123",
+          "nom_personnalise": "Pierre Travail",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-02-20T14:15:00Z",
+          "derniere_interaction": "2025-06-13T16:20:00Z"
+        },
+        {
+          "id": "contact_1750015777275",
+          "nom": "anta",
+          "telephone": "775554998",
+          "nom_personnalise": "maman",
+          "photo_profil": null,
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-15T19:29:37.275Z",
+          "derniere_interaction": null
+        },
+        {
+          "id": "contact_1750031352970",
+          "nom": "ndeya",
+          "telephone": "775554999",
+          "nom_personnalise": "anta",
+          "photo_profil": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD6ElEQVR4AeyZW4vTQBTHT7Pd3Xa7D4KIPuiDeAMRUfzQ+gV89iOIoigqeEFBvMGC3bbb7cY5obckOCQDc3LO7L902snczuT3Y5pJmuU/HudIehhkhJcqAhCiSgcRhECIMgLKpoMVAiHKCCibDlYIhCgjoGw6WCHnQoiyk7Q0HawQZbYgBEKUEVA2HawQCFFGQNl0sEIgRBkBZdPBCoEQZQSUTcfSClGGLs50ICQO1+BRISQYXZyOEBKHa/CoEBKMLk5HCInDNXhUCAlGF6cjhMThGjwqhASji9MRQuJwDR4VQoLRxekIIXG4Bo8KIcHo4nTUK+TgLtHhw3oa3W9HYu9KfYzhzXZjCLbWK2RwnWh4p55Y1OBGc0T9i/Ux9q417y/cUq8QH4jRPaJen1J82RSSDYkOnJQEjdgUwiKGt4h2RpxLKtkV0tshGj1ISgafjCEhOc+3nPbdxXn3crnM+JEhIT2i2dc6bt4a10u7LgmOb0iIO8fpe/dx5tLWu3+BqM02eKurxqwtIbn72Zp8qHPkm8VEtsG2hGR7RONXRPlJWUq2T6lsg20JIbezYhkspayEqNgGH1ZLzR3bEtJzF3ZGPHHXksVfzm1SIttgW0LW+N21ZPx8fbTO7F8l2r20PrSYySxOupjz7BvRyfciW/o4fFQ6tHZgVwiTLlaJWy2cX6W+2wYrfry+mub/vm0LOT0imn6snxs/eFxvgyvC6q1VldgWwijHL902eM65TcoGRPyIviip3EgWZXo/vEL0TntrZmdTouO3WwXL7ICfBrttcL5YFtj4si+EOR+/IVqMObdJq21wXlk9mxYqc2kIIfezxD9dVcS8De65u/hqOem9riQixBGffSaa/3KZynt4u1LAh8sbTM4qS+kIYbDFNpgzW8nYv4ppCZn/Jpp92bJhL5uWEOY/fuG2wbZ2VjztVUpPCO+2Ju9W52fuOz0hrOD4NRHfn3DeWEpTSH7qbhbdH1nGZPB0OxDCYRukP0+Jfj4pp+mnBh2XTfiv3mr/1fHRs2UjfV96hehjJTIjCBHB3DwIhDRnJdISQkQwNw8CIc1ZibSEEBHMzYNASHNWIi0hRARz8yAQ0pyVSMtkhIjQEggCIQKQ24SAkDa0BNpCiADkNiEgpA0tgbYQIgC5TQgIaUNLoC2ECEBuEwJC2tASaAshApDbhIAQLy35SgiRZ+6NCCFePPKVECLP3BsRQrx45CshRJ65NyKEePHIV0KIPHNvRAjx4pGvhBB55t6IEOLFE6fSNyqE+Oh0UAchHUD3hYQQH50O6iCkA+i+kBDio9NBHYR0AN0XEkJ8dDqog5AOoPtC/gMAAP//cfLBEAAAAAZJREFUAwC6jNS0BdpQ+gAAAABJRU5ErkJggg==",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-15T23:49:12.970Z",
+          "derniere_interaction": null
+        },
+        {
+          "id": "contact_1750035216131",
+          "nom": "eve",
+          "telephone": "770689596",
+          "nom_personnalise": "eve",
+          "photo_profil": null,
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-16T02:28:00.578Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [
+        "group_001",
+        "group_002",
+        "group_1750013700345",
+        "group_1750042504418"
+      ],
+      "conversations": [
+        {
+          "id": "conv_001",
+          "type": "individuelle",
+          "participants": [
+            "user_001",
+            "contact_001"
+          ],
+          "derniere_activite": "2025-06-14T12:45:00Z",
+          "messages_non_lus": 2,
+          "epingle": true,
+          "archive": true,
+          "silencieux": false,
+          "date_archivage": "2025-06-16T01:32:43.293Z"
+        },
+        {
+          "id": "conv_002",
+          "type": "groupe",
+          "groupe_id": "group_001",
+          "derniere_activite": "2025-06-14T11:20:00Z",
+          "messages_non_lus": 0,
+          "epingle": false,
+          "archive": true,
+          "silencieux": true,
+          "date_archivage": "2025-06-16T01:46:03.313Z"
+        },
+        {
+          "id": "1750037575664",
+          "archive": true,
+          "date_archivage": "2025-06-16T01:32:55.664Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T01:32:55.664Z",
+          "participants": [
+            "user_001",
+            "contact_002"
+          ]
+        },
+        {
+          "id": "1750038344653",
+          "archive": true,
+          "date_archivage": "2025-06-16T01:45:44.653Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T01:45:44.653Z",
+          "participants": [
+            "user_001",
+            "contact_1750015777275"
+          ]
+        },
+        {
+          "id": "1750038376852",
+          "archive": true,
+          "date_archivage": "2025-06-16T01:46:16.852Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T01:46:16.852Z",
+          "groupe_id": "group_002"
+        },
+        {
+          "id": "1750042554999",
+          "archive": true,
+          "date_archivage": "2025-06-16T02:55:54.999Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T02:55:54.999Z",
+          "participants": [
+            "user_001",
+            "contact_1750035216131"
+          ]
+        },
+        {
+          "id": "1750056496827",
+          "archive": true,
+          "date_archivage": "2025-06-16T06:48:16.827Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T06:48:16.827Z",
+          "groupe_id": "group_1750042504418"
+        }
+      ]
+    },
+    {
+      "id": "user_1750020211193",
+      "nom": "awa",
+      "telephone": "770689594",
+      "email": "770689594@temp.com",
+      "password": "motdepasse123",
+      "photo_profil": null,
+      "statut": {
+        "texte": "Nouveau sur l'application",
+        "date_modification": "2025-06-15T20:43:31.193Z",
+        "visible_pour": "contacts"
+      },
+      "derniere_connexion": "2025-06-15T20:43:31.193Z",
+      "en_ligne": false,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": false
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_1750020211203_mutual",
+          "nom": "anta",
+          "telephone": "775554998",
+          "nom_personnalise": "anta",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-15T20:43:31.203Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [],
+      "conversations": []
+    },
+    {
+      "id": "user_1750020318987",
+      "nom": "coura",
+      "telephone": "770689595",
+      "email": "770689595@temp.com",
+      "password": "motdepasse123",
+      "photo_profil": null,
+      "statut": {
+        "texte": "Nouveau sur l'application",
+        "date_modification": "2025-06-15T20:45:18.987Z",
+        "visible_pour": "contacts"
+      },
+      "derniere_connexion": "2025-06-15T20:45:18.987Z",
+      "en_ligne": false,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": false
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_1750020318996_mutual",
+          "nom": "anta",
+          "telephone": "775554998",
+          "nom_personnalise": "anta",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-15T20:45:18.996Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [],
+      "conversations": []
+    },
+    {
+      "id": "user_1750031352952",
+      "nom": "ndeya",
+      "telephone": "775554999",
+      "email": "775554999@temp.com",
+      "password": "motdepasse123",
+      "photo_profil": null,
+      "statut": {
+        "texte": "Nouveau sur l'application",
+        "date_modification": "2025-06-15T23:49:12.952Z",
+        "visible_pour": "contacts"
+      },
+      "derniere_connexion": "2025-06-15T23:49:12.952Z",
+      "en_ligne": false,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": false
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_1750031352970_mutual",
+          "nom": "ndeye",
+          "telephone": "770689591",
+          "nom_personnalise": "ndeye",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-15T23:49:12.970Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [],
+      "conversations": []
+    },
+    {
+      "id": "user_1750035216121",
+      "nom": "eve",
+      "telephone": "770689596",
+      "email": "770689596@temp.com",
+      "password": "motdepasse123",
+      "photo_profil": null,
+      "statut": {
+        "texte": "Nouveau sur l'application",
+        "date_modification": "2025-06-16T00:53:36.121Z",
+        "visible_pour": "contacts"
+      },
+      "derniere_connexion": "2025-06-16T00:53:36.121Z",
+      "en_ligne": false,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": false
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_1750035216132_mutual",
+          "nom": "ndeye",
+          "telephone": "770689591",
+          "nom_personnalise": "ndeye",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-16T00:53:36.132Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [],
+      "conversations": [
+        {
+          "id": "1750037206298",
+          "archive": true,
+          "date_archivage": "2025-06-16T01:27:15.809Z",
+          "messages_non_lus": 0,
+          "derniere_activite": "2025-06-16T01:26:46.298Z",
+          "participants": [
+            "user_1750035216121",
+            "contact_1750035216132_mutual"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user_1750040880556",
+      "nom": "adama",
+      "telephone": "770689597",
+      "email": "770689597@temp.com",
+      "password": "motdepasse123",
+      "photo_profil": null,
+      "statut": {
+        "texte": "Nouveau sur l'application",
+        "date_modification": "2025-06-16T02:28:00.556Z",
+        "visible_pour": "contacts"
+      },
+      "derniere_connexion": "2025-06-16T02:28:00.556Z",
+      "en_ligne": false,
+      "parametre_confidentialite": {
+        "photo_profil_visible": "contacts",
+        "statut_visible": "contacts",
+        "derniere_connexion_visible": "contacts",
+        "lecture_confirme": true,
+        "double_verification": false
+      },
+      "liste_contacts": [
+        {
+          "id": "contact_1750040880578_mutual",
+          "nom": "ndeye",
+          "telephone": "770689591",
+          "nom_personnalise": "ndeye",
+          "bloque": false,
+          "favori": false,
+          "date_ajout": "2025-06-16T02:28:00.578Z",
+          "derniere_interaction": null
+        }
+      ],
+      "groupes_membre": [],
+      "conversations": []
+    }
+  ],
+  "groupes": [
+    {
+      "id": "group_001",
+      "nom": "Famille Dupont",
+      "description": "Groupe de famille pour organiser les réunions",
+      "photo_groupe": "https://example.com/photos/famille.jpg",
+      "createur": "user_001",
+      "date_creation": "2025-01-20T10:00:00Z",
+      "parametres": {
+        "seuls_admins_modifient_infos": true,
+        "seuls_admins_envoient_messages": false,
+        "approuver_nouveaux_membres": true,
+        "messages_ephemeres": {
+          "active": false,
+          "duree": null
+        }
+      },
+      "membres": [
+        {
+          "id": "user_001",
+          "role": "administrateur",
+          "date_ajout": "2025-01-20T10:00:00Z",
+          "ajoute_par": "user_001"
+        },
+        {
+          "id": "user_002",
+          "role": "membre",
+          "date_ajout": "2025-01-20T10:30:00Z",
+          "ajoute_par": "user_001"
+        },
+        {
+          "id": "contact_002",
+          "role": "membre",
+          "date_ajout": "2025-01-25T15:00:00Z",
+          "ajoute_par": "user_001"
+        }
+      ],
+      "conversation": {
+        "id": "conv_group_001",
+        "derniere_activite": "2025-06-14T11:20:00Z",
+        "messages_count": 245,
+        "media_partages": 45
+      }
+    },
+    {
+      "id": "group_002",
+      "nom": "Équipe Projet",
+      "description": "Coordination du projet XYZ",
+      "photo_groupe": "https://example.com/photos/equipe.jpg",
+      "createur": "user_001",
+      "date_creation": "2025-03-01T09:00:00Z",
+      "parametres": {
+        "seuls_admins_modifient_infos": false,
+        "seuls_admins_envoient_messages": false,
+        "approuver_nouveaux_membres": false,
+        "messages_ephemeres": {
+          "active": true,
+          "duree": "7_jours"
+        }
+      },
+      "membres": [
+        {
+          "id": "user_001",
+          "role": "administrateur",
+          "date_ajout": "2025-03-01T09:00:00Z",
+          "ajoute_par": "user_001"
+        },
+        {
+          "id": "contact_002",
+          "role": "administrateur",
+          "date_ajout": "2025-03-01T09:15:00Z",
+          "ajoute_par": "user_001"
+        }
+      ],
+      "conversation": {
+        "id": "conv_group_002",
+        "derniere_activite": "2025-06-13T17:45:00Z",
+        "messages_count": 123,
+        "media_partages": 15
+      }
+    },
+    {
+      "id": "group_1750013700345",
+      "nom": "familia",
+      "description": "",
+      "photo_groupe": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAB/UlEQVR4Xu2cPYoCQRQGn4fxdAMaeh2d6xh7Ag9gJBg5imAgCvPD67YaatNte4qq/XZxA1dD1w3hF8bAyiCYFi8Qg7B6GATWwyAGoRmA8fg3xCAwAzAcF2IQmAEYjgsxCMwADMeFGARmAIbjQgwCMwDDcSEGgRmA4bgQg8AMwHBciEFgBmA4LsQgMAMwHBdiEJgBGI4LMQjMAAzHhRgEZgCG40IMAjMAw3EhBoEZgOG4EIPADMBwXIhBYAZgOO0sZL2O2G6X6bvfIzabZa+t/CqDVBY+9jiDjBmq/P22g+z3EbfbuLLh+dkIp9P4OcCJtoPsdhHXK0BjHoJB8lym3GSQFI15lxgkz2XKTQZJ0Zh3SdtBpno4HiMOh6mn/3rOIH/V//1wgxhkoYFf/8vq+2lvDC+XiPN54YPrvqzthfjGsO5Py8fTfi3EIAYpbcBfWaUNz7zfIDOFlT5ukNKGZ95vkJnCSh9vJ0hpE5D7DQIJ8cYwiEFgBmA4LsQgMAMwHBdiEJgBGI4LMQjMAAzHhRgEZgCG40IMAjMAw3EhBoEZgOG4EIPADMBwXIhBYAZgOC7EIDADMBwXYhCYARiOCzEIzAAMx4UYBGYAhuNCDAIzAMNxIQaBGYDhuBCDwAzAcFyIQWAGYDguxCAwAzAcF2IQmAEYjgsxCMwADOcBhRZzRLgv1u4AAAAASUVORK5CYII=",
+      "createur": "user_001",
+      "date_creation": "2025-06-15T18:55:00.346Z",
+      "membres": [
+        {
+          "utilisateur_id": "user_001",
+          "role": "admin",
+          "date_ajout": "2025-06-15T18:55:00.346Z",
+          "ajoute_par": "user_001"
+        }
+      ],
+      "parametres": {
+        "seuls_admins_modifient_infos": false,
+        "seuls_admins_envoient_messages": false,
+        "approuver_nouveaux_membres": false,
+        "messages_ephemeres": {
+          "active": false,
+          "duree": null
+        }
+      }
+    },
+    {
+      "id": "group_1750042504418",
+      "nom": "dada",
+      "description": "",
+      "photo_groupe": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADz0lEQVR4Xu2c3UtTARjGn03ndOnsw3lRZmRFemNFUAh90EUfENFNRdfR39Q/0EV0V9BVYEkfKARi5Vdq6cRpTJtfM13O2Y7haGayd+6F9xyec+OFL895zu/He85xMH2Pul+sg4cZAj4KMeNiowiF2PJBIcZ8UAiFWCNgrA+fIRRijICxOtwQCjFGwFgdbgiFGCNgrA43hEKMETBWhxtCIcYIGKvDDaEQYwSM1eGGUIgxAsbqcEMoxBgBY3W4IRRijICxOtwQCjFGwFgdbgiFGCNgrA43hEKMETBWhxtCIcYIGKvDDaEQYwSM1eGGUIgxAsbqcEMoxBgBY3VcsSG3T7ThYPX+/6JbzaSRWksj+WsZ35dmEVucwfjCtDHUhdXxhJDtLnUh9RMfpoYwNBsrjISRKc8K2eQ7MjuJ9rEeZOCOr+O7Ukh0IY6+6egf5j4g6A+gJliFhprItre2oUQM7dEeIzuwcw1XCumdHsPbib5tr6w+tBdXj55BuCKU9/uXo934OjdlXornhDjEQ4Eg7jZfRKg8mBMwl1rCk/4OCikFga1vWTttyOb5mg8cxpXG1rzTPx14g8TKYikqqWV4ckMcWmU+Px6eug5/9ufm8S57m/ucvd1ZPjwrxIF+5+QFREK1Of498W/ojA1Y9uGOf61RzC3LoX7z2Dk0hiM5AV8SE3gV/UghuyVQrJBbx89nX4XrcqcfzAp5TSG71QEUK+R+y2Xsq6zmLWv3CvITihESLAvgQeu1vCBnO5wtsXx49qF+ur4JbYda8tg/7m1HcnXFsg9vPtRrKqpwr+USKvzlOfiTyR94PtxlWoZTznMbEqmqxY2ms6jOSvn7eDbcialkgkJKQWDrM8T5cHFgZjwX7fzxtydQiYZwHY6E6/855af4KN7H+ktRRT3DlRsioeI8xDuyD3N3fPju0ltWIUKW0yl0xQbNv1VtvRbPbEg6s7bxBjXzcx7R+ThGsh+1Z9YzhbgzNeMKIaaIKZehEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNJ4CpESU56nEGXA0ngKkRJTnqcQZcDSeAqRElOepxBlwNL439wpIn83SEtzAAAAAElFTkSuQmCC",
+      "createur": "user_001",
+      "date_creation": "2025-06-16T02:55:04.418Z",
+      "date_ajout": "2025-06-16T02:55:04.418Z",
+      "membres": [
+        {
+          "utilisateur_id": "user_001",
+          "role": "admin",
+          "date_ajout": "2025-06-16T02:55:04.428Z",
+          "ajoute_par": "user_001"
+        },
+        {
+          "utilisateur_id": "contact_001",
+          "role": "membre",
+          "date_ajout": "2025-06-16T02:55:04.428Z",
+          "ajoute_par": "user_001"
+        },
+        {
+          "utilisateur_id": "contact_002",
+          "role": "membre",
+          "date_ajout": "2025-06-16T02:55:04.428Z",
+          "ajoute_par": "user_001"
+        }
+      ],
+      "parametres": {
+        "seuls_admins_modifient_infos": false,
+        "seuls_admins_envoient_messages": false,
+        "approuver_nouveaux_membres": false
+      }
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_1750025169221",
+      "conversation_id": "conv_contact_1750015777275",
+      "expediteur": "user_1750015777266",
+      "contenu": {
+        "type": "texte",
+        "texte": "hello",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-15T22:06:09.221Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-14T12:31:00Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_002",
+      "conversation_id": "conv_001",
+      "expediteur": "user_002",
+      "contenu": {
+        "type": "texte",
+        "texte": "Ça va bien merci ! Et toi ?",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-14T12:32:00Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-14T12:33:00Z"
+      },
+      "reponse_a": "msg_001",
+      "transfere_de": null,
+      "reactions": [
+        {
+          "emoji": "❤️",
+          "utilisateur": "user_001",
+          "timestamp": "2025-06-14T12:34:00Z"
+        }
+      ],
+      "ephemere": false
+    },
+    {
+      "id": "msg_003",
+      "conversation_id": "conv_001",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "media",
+        "media_type": "image",
+        "url": "https://example.com/media/photo123.jpg",
+        "legende": "Regarde cette belle photo !",
+        "taille": 1024000,
+        "dimensions": {
+          "largeur": 1920,
+          "hauteur": 1080
+        }
+      },
+      "timestamp": "2025-06-14T12:45:00Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_004",
+      "conversation_id": "conv_group_001",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "Bonjour tout le monde ! Réunion dimanche à 14h ?",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-14T11:20:00Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu_par": [
+          {
+            "utilisateur": "user_002",
+            "timestamp": "2025-06-14T11:25:00Z"
+          },
+          {
+            "utilisateur": "contact_002",
+            "timestamp": "2025-06-14T11:45:00Z"
+          }
+        ]
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [
+        {
+          "emoji": "👍",
+          "utilisateur": "user_002",
+          "timestamp": "2025-06-14T11:26:00Z"
+        }
+      ],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750025169221",
+      "expediteur_id": "user_1750015777266",
+      "contenu": "hello",
+      "type": "texte",
+      "date_envoi": "2025-06-15T22:06:09.221Z",
+      "lu": false,
+      "reactions": [],
+      "reponse_a": null,
+      "conversation_id": "conv_contact_1750015777275_mutual_user_1750015777266",
+      "expediteur": "user_1750015777266",
+      "timestamp": "2025-06-15T22:06:09.222Z"
+    },
+    {
+      "id": "msg_1750026316617",
+      "conversation_id": "conv_contact_1750015777275",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-15T22:25:16.617Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750031231470",
+      "conversation_id": "conv_contact_contact_1750015777275",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-15T23:47:11.470Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750031374839",
+      "conversation_id": "conv_contact_contact_1750031352970",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-15T23:49:34.839Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750032447604",
+      "conversation_id": "conv_contact_1750031352970_user_001",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:07:27.604Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750034010788",
+      "conversation_id": "conv_contact_contact_1750031352970_mutual",
+      "expediteur": "user_1750031352952",
+      "contenu": {
+        "type": "texte",
+        "texte": "bonsoir",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:33:30.788Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:33:33.947Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750034068759",
+      "conversation_id": "conv_contact_contact_1750031352970",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "cv",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:34:28.759Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:34:31.980Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750034105202",
+      "conversation_id": "conv_contact_contact_1750031352970_mutual",
+      "expediteur": "user_1750031352952",
+      "contenu": {
+        "type": "texte",
+        "texte": "coucou",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:35:05.202Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:35:08.235Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750035022018",
+      "conversation_id": "conv_contact_contact_1750031352970_mutual",
+      "expediteur": "user_1750031352952",
+      "contenu": {
+        "type": "texte",
+        "texte": "hello",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:50:22.014Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:50:25.894Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750035097461",
+      "conversation_id": "conv_contact_contact_1750031352970",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "je te vois pas",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:51:37.457Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:51:41.315Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750035236034",
+      "conversation_id": "conv_contact_contact_1750035216131",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "coucou",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:53:56.031Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:54:00.256Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750035346633",
+      "conversation_id": "conv_contact_contact_1750035216132_mutual",
+      "expediteur": "user_1750035216121",
+      "contenu": {
+        "type": "texte",
+        "texte": "coucou",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:55:46.630Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:55:51.641Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750035433221",
+      "conversation_id": "conv_contact_contact_1750035216131",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "cv",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T00:57:13.216Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T00:57:18.009Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750040105091_contact_1750031352970",
+      "conversation_id": "conv_contact_contact_1750031352970",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T02:15:05.091Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false,
+      "diffusion": true
+    },
+    {
+      "id": "msg_1750040105092_contact_1750035216131",
+      "conversation_id": "conv_contact_contact_1750035216131",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "salut",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T02:15:05.092Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false,
+      "diffusion": true
+    },
+    {
+      "id": "msg_1750056286881",
+      "conversation_id": "conv_group_group_1750013700345",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "coucou",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T06:44:46.877Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750056297899",
+      "conversation_id": "conv_group_group_1750042504418",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "bonsoir",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T06:44:57.896Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": true,
+        "timestamp_lecture": "2025-06-16T06:45:02.490Z"
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    },
+    {
+      "id": "msg_1750056324479_group_1750042504418",
+      "conversation_id": "conv_group_group_1750042504418",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "saluttt",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T06:45:24.479Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false,
+      "diffusion": true
+    },
+    {
+      "id": "msg_1750056324480_contact_1750031352970",
+      "conversation_id": "conv_contact_contact_1750031352970",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "saluttt",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T06:45:24.480Z",
+      "statut": {
+        "envoye": true,
+        "livre": false,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false,
+      "diffusion": true
+    },
+    {
+      "id": "msg_1750057591832",
+      "conversation_id": "conv_group_group_1750013700345",
+      "expediteur": "user_001",
+      "contenu": {
+        "type": "texte",
+        "texte": "rosa",
+        "mise_en_forme": []
+      },
+      "timestamp": "2025-06-16T07:06:31.826Z",
+      "statut": {
+        "envoye": true,
+        "livre": true,
+        "lu": false,
+        "timestamp_lecture": null
+      },
+      "reponse_a": null,
+      "transfere_de": null,
+      "reactions": [],
+      "ephemere": false
+    }
+  ],
+  "statuts": [
+    {
+      "id": "status_001",
+      "proprietaire": "user_001",
+      "contenu": {
+        "type": "image",
+        "url": "https://example.com/status/photo456.jpg",
+        "texte": "Belle journée aujourd'hui !",
+        "couleur_fond": "#FF6B6B"
+      },
+      "timestamp": "2025-06-14T09:00:00Z",
+      "expiration": "2025-06-15T09:00:00Z",
+      "visible_pour": "contacts",
+      "vues": [
+        {
+          "utilisateur": "user_002",
+          "timestamp": "2025-06-14T09:15:00Z"
+        },
+        {
+          "utilisateur": "contact_002",
+          "timestamp": "2025-06-14T10:30:00Z"
+        }
+      ],
+      "reactions": [
+        {
+          "emoji": "😍",
+          "utilisateur": "user_002",
+          "timestamp": "2025-06-14T09:16:00Z"
+        }
+      ]
+    },
+    {
+      "id": "status_002",
+      "proprietaire": "user_002",
+      "contenu": {
+        "type": "texte",
+        "texte": "Motivation du jour : Chaque jour est une nouvelle opportunité !",
+        "couleur_fond": "#4ECDC4",
+        "police": "bold"
+      },
+      "timestamp": "2025-06-14T07:30:00Z",
+      "expiration": "2025-06-15T07:30:00Z",
+      "visible_pour": "contacts",
+      "vues": [
+        {
+          "utilisateur": "user_001",
+          "timestamp": "2025-06-14T08:00:00Z"
+        }
+      ],
+      "reactions": [
+        {
+          "emoji": "💪",
+          "utilisateur": "user_001",
+          "timestamp": "2025-06-14T08:01:00Z"
+        }
+      ]
+    }
+  ],
+  "appels": [
+    {
+      "id": "call_001",
+      "type": "audio",
+      "initiateur": "user_001",
+      "participants": [
+        "user_001",
+        "user_002"
+      ],
+      "timestamp_debut": "2025-06-13T20:00:00Z",
+      "timestamp_fin": "2025-06-13T20:15:00Z",
+      "duree": 900,
+      "statut": "termine",
+      "qualite": "bonne"
+    },
+    {
+      "id": "call_002",
+      "type": "video",
+      "initiateur": "user_002",
+      "participants": [
+        "user_001",
+        "user_002",
+        "contact_002"
+      ],
+      "timestamp_debut": "2025-06-14T10:00:00Z",
+      "timestamp_fin": null,
+      "duree": null,
+      "statut": "manque",
+      "qualite": null
+    }
+  ],
+  "parametres_application": {
+    "langue": "fr-FR",
+    "theme": "clair",
+    "notifications": {
+      "son_actif": true,
+      "vibration_active": true,
+      "notification_groupe": true,
+      "apercu_message": true,
+      "sons_personnalises": {
+        "message": "son_message_1.mp3",
+        "groupe": "son_groupe_1.mp3",
+        "appel": "son_appel_1.mp3"
+      }
+    },
+    "chat": {
+      "taille_police": "moyenne",
+      "fond_ecran": "default",
+      "bulles_messages": "style_1",
+      "entrer_pour_envoyer": false,
+      "sauvegarde_media": true
+    },
+    "stockage": {
+      "sauvegarde_automatique": true,
+      "frequence_sauvegarde": "quotidienne",
+      "dossier_telechargements": "/WhatsApp/Media/",
+      "nettoyage_automatique": {
+        "active": true,
+        "frequence": "mensuelle",
+        "conserver_messages": "1_an"
+      }
+    }
+  }
+}
