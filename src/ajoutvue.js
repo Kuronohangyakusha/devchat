@@ -283,6 +283,12 @@ async function gererAjoutContactAvecPhoto(formulaire, popup) {
         await ajouterContactMutuel(utilisateur, utilisateurExistant);
  
         localStorage.setItem('utilisateurConnecte', JSON.stringify(utilisateur));
+        await fetch(`https://devchat-jsi7.onrender.com/utilisateurs/${utilisateur.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(utilisateur)
+});
+
         await sauvegarderUtilisateurs();
 
         messageSucces.classList.remove('hidden');
