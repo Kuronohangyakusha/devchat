@@ -3,14 +3,13 @@ const URL_UTILISATEURS = "https://devchat-jsi7.onrender.com/utilisateurs";
 
 let conversationSelectionneeArchive = null;
 
-// Fonction pour initialiser le système d'archivage
+
 export function initialiserArchivage() {
     const boutonArchive = document.querySelector('.Archivage');
     if (boutonArchive) {
         boutonArchive.addEventListener('click', gererArchivage);
     }
 }
-
 // Fonction principale pour gérer l'archivage
 async function gererArchivage() {
     // Vérifier si une conversation est sélectionnée
@@ -99,8 +98,7 @@ function afficherPopupConfirmationArchivage(conversation) {
     `;
     
     document.body.appendChild(popup);
-    
-    // Animation d'apparition
+     
     setTimeout(() => {
         const contenu = document.getElementById('contenuPopupArchivage');
         if (contenu) {
@@ -109,8 +107,7 @@ function afficherPopupConfirmationArchivage(conversation) {
         }
     }, 10);
 }
-
-// Fonction pour fermer le popup d'archivage
+ 
 window.fermerPopupArchivage = function() {
     const popup = document.getElementById('popupArchivage');
     if (popup) {
@@ -126,13 +123,12 @@ window.fermerPopupArchivage = function() {
     }
 };
 
-// Fonction pour confirmer l'archivage
 window.confirmerArchivage = async function(conversationId, conversationType) {
     try {
         // Récupérer l'utilisateur connecté
         const userConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
         
-        // Récupérer les données uti 
+        // Récupérer les données utilisateur depuis l'API
         const response = await fetch(URL_UTILISATEURS);
         const utilisateurs = await response.json();
         
@@ -143,13 +139,8 @@ window.confirmerArchivage = async function(conversationId, conversationType) {
         
         const utilisateur = utilisateurs[utilisateurIndex];
         
-        
-        if (!utilisateur.conversations) {
-            utilisateur.conversations = [];
-        }
-        
-      
-        let conversationIndex = utilisateur.conversations.findIndex(conv => {
+        // Trouver et modifier la conversation
+        const conversationIndex = utilisateur.conversations.findIndex(conv => {
             if (conversationType === 'groupe') {
                 return conv.groupe_id === conversationId;
             } else {
@@ -157,52 +148,38 @@ window.confirmerArchivage = async function(conversationId, conversationType) {
             }
         });
         
-         
-        if (conversationIndex === -1) {
-            const nouvelleConversation = {
-                id: Date.now().toString(),  
-                archive: true,
-                date_archivage: new Date().toISOString(),
-                messages_non_lus: 0,
-                derniere_activite: new Date().toISOString()
-            };
-            
-            if (conversationType === 'groupe') {
-                nouvelleConversation.groupe_id = conversationId;
-            } else {
-                nouvelleConversation.participants = [userConnecte.id, conversationId];
-            }
-            
-            utilisateur.conversations.push(nouvelleConversation);
-            conversationIndex = utilisateur.conversations.length - 1;
-        } else {
-             
+        if (conversationIndex !== -1) {
+            // Marquer la conversation comme archivée
             utilisateur.conversations[conversationIndex].archive = true;
             utilisateur.conversations[conversationIndex].date_archivage = new Date().toISOString();
-        }
-        
-         
-        const updateResponse = await fetch(`${URL_UTILISATEURS}/${utilisateur.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(utilisateur)
-        });
-        
-        if (updateResponse.ok) {
-             
-            fermerPopupArchivage();
-           
-            afficherNotification('Conversation archivée avec succès', 'success');
             
-             
-            await rafraichirAffichageApresArchivage(conversationId, conversationType);
-             ation
-            effacerSelectionConversation();
+            // Mettre à jour via l'API
+            const updateResponse = await fetch(`${URL_UTILISATEURS}/${utilisateur.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(utilisateur)
+            });
             
+            if (updateResponse.ok) {
+                // Fermer le popup
+                fermerPopupArchivage();
+                
+                // Afficher notification de succès
+                afficherNotification('Conversation archivée avec succès', 'success');
+                
+                // Rafraîchir l'affichage
+                await rafraichirAffichageApresArchivage(conversationId, conversationType);
+                
+                // Effacer la sélection de conversation
+                effacerSelectionConversation();
+                
+            } else {
+                throw new Error('Erreur lors de la mise à jour');
+            }
         } else {
-            throw new Error('Erreur lors de la mise à jour');
+            throw new Error('Conversation non trouvée');
         }
         
     } catch (error) {
@@ -210,6 +187,8 @@ window.confirmerArchivage = async function(conversationId, conversationType) {
         afficherNotification('Erreur lors de l\'archivage de la conversation', 'error');
     }
 };
+
+
 
 async function rafraichirAffichageApresArchivage(conversationId, conversationType) {
      
@@ -333,13 +312,11 @@ function afficherNotification(message, type = 'info') {
 
 // Fonction pour voir les conversations archivées
 export function afficherConversationsArchivees() {
-    // Cette fonction peut être appelée pour afficher une liste des conversations archivées
-    // Elle pourrait ouvrir un modal ou une nouvelle vue
+     
     console.log('Affichage des conversations archivées...');
     // Implémenter selon les besoins
 }
 
-// Fonction pour restaurer une conversation archivée
 export async function restaurerConversation(conversationId, conversationType) {
     try {
         const userConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
@@ -375,7 +352,18 @@ export async function restaurerConversation(conversationId, conversationType) {
             });
             
             if (updateResponse.ok) {
+                // Mettre à jour localStorage
+                localStorage.setItem('utilisateurConnecte', JSON.stringify(utilisateur));
+                
                 afficherNotification('Conversation restaurée avec succès', 'success');
+                
+                // Recharger l'affichage si on est dans le filtre archives
+                if (window.filtreActuel === 'archives') {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+                
                 return true;
             } else {
                 throw new Error('Erreur lors de la restauration');
@@ -386,5 +374,76 @@ export async function restaurerConversation(conversationId, conversationType) {
         console.error('Erreur lors de la restauration:', error);
         afficherNotification('Erreur lors de la restauration de la conversation', 'error');
         return false;
+    }
+}
+
+export async function afficherListeArchives() {
+    try {
+        const userConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
+        
+        const response = await fetch(URL_UTILISATEURS);
+        const utilisateurs = await response.json();
+        
+        const utilisateur = utilisateurs.find(u => u.id === userConnecte.id);
+        if (!utilisateur) {
+            throw new Error('Utilisateur non trouvé');
+        }
+        
+        // Récupérer les conversations archivées
+        const conversationsArchivees = utilisateur.conversations?.filter(conv => conv.archive) || [];
+        
+        // Récupérer les groupes et contacts pour obtenir les détails
+        const responseGroupes = await fetch("https://devchat-jsi7.onrender.com/groupes");
+        const groupes = await responseGroupes.json();
+        
+        const archives = [];
+        
+        for (const conv of conversationsArchivees) {
+            let item = null;
+            let type = '';
+            
+            if (conv.groupe_id) {
+               
+                item = groupes.find(g => g.id === conv.groupe_id);
+                type = 'groupe';
+            } else if (conv.participants) {
+                
+                const autreParticipant = conv.participants.find(p => p !== userConnecte.id);
+                item = utilisateur.liste_contacts?.find(c => c.id === autreParticipant);
+                type = 'contact';
+            }
+            
+            if (item) {
+                archives.push({
+                    conversation: conv,
+                    item: item,
+                    type: type
+                });
+            }
+        }
+        
+        afficherPopupArchives(archives);
+        
+    } catch (error) {
+        console.error('Erreur lors du chargement des archives:', error);
+        afficherNotification('Erreur lors du chargement des archives', 'error');
+    }
+}
+
+export async function compterConversationsArchivees() {
+    try {
+        const userConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
+        const response = await fetch(URL_UTILISATEURS);
+        const utilisateurs = await response.json();
+        
+        const utilisateur = utilisateurs.find(u => u.id === userConnecte.id);
+        if (!utilisateur || !utilisateur.conversations) {
+            return 0;
+        }
+        
+        return utilisateur.conversations.filter(conv => conv.archive === true).length;
+    } catch (error) {
+        console.error('Erreur lors du comptage des archives:', error);
+        return 0;
     }
 }

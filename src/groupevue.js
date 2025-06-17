@@ -1,4 +1,4 @@
- 
+
 export function AjoutGroupePopup() {
     const popup = document.createElement("div");
     popup.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
@@ -118,12 +118,12 @@ export function AjoutGroupePopup() {
 }
 
 
-// Correction de la fonction ajouterGestionnairesEvenementsGroupe
 function ajouterGestionnairesEvenementsGroupe(popup) {
     const fermerBtn = popup.querySelector("#fermerPopupGroupe");
     const annulerBtn = popup.querySelector("#annulerAjoutGroupe");
     const formulaire = popup.querySelector("#formulaireAjoutGroupe");
     const rechercheInput = popup.querySelector("#rechercheContact");
+    const confirmerBtn = popup.querySelector("#confirmerAjoutGroupe");
     
     const fermerPopup = () => {
         popup.classList.add("opacity-0");
@@ -137,6 +137,34 @@ function ajouterGestionnairesEvenementsGroupe(popup) {
     popup.addEventListener("click", (e) => {
         if (e.target === popup) fermerPopup();
     });
+     
+    function validerFormulaire() {
+        const nomGroupe = formulaire.querySelector('#nomGroupe').value.trim();
+        const contactsSelectionnes = formulaire.querySelectorAll('input[name="membresGroupe"]:checked').length;
+        
+        const peutCreer = nomGroupe.length >= 2 && contactsSelectionnes >= 2;
+        
+        confirmerBtn.disabled = !peutCreer;
+        if (peutCreer) {
+            confirmerBtn.className = "px-4 py-2 bg-fuchsia-600 text-white rounded-md hover:bg-fuchsia-700 transition-colors";
+        } else {
+            confirmerBtn.className = "px-4 py-2 bg-gray-400 text-white rounded-md cursor-not-allowed";
+        }
+    }
+    
+   
+    formulaire.querySelector('#nomGroupe').addEventListener('input', validerFormulaire);
+    
+    // Observer les changements de checkboxes (pour les éléments ajoutés dynamiquement)
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('.contact-checkbox').forEach(checkbox => {
+            checkbox.removeEventListener('change', validerFormulaire); // Éviter les doublons
+            checkbox.addEventListener('change', validerFormulaire);
+        });
+        validerFormulaire();
+    });
+    
+    observer.observe(popup, { childList: true, subtree: true });
     
     formulaire.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -149,9 +177,11 @@ function ajouterGestionnairesEvenementsGroupe(popup) {
     
     ajouterGestionnairePhotoGroupe(popup);
     
-    // Charger les contacts après que le DOM soit prêt
+     
     setTimeout(() => {
-        chargerListeContacts();
+        chargerListeContacts().then(() => {
+            validerFormulaire(); 
+        });
     }, 100);
 }
 
@@ -188,7 +218,6 @@ function ajouterGestionnairePhotoGroupe(popup) {
 }
 
 
-// 2. Correction de la fonction chargerListeContacts - Problème avec les IDs des contacts
 async function chargerListeContacts() {
     try {
         console.log("Début du chargement des contacts...");
@@ -202,6 +231,7 @@ async function chargerListeContacts() {
                     <div class="text-center text-gray-500 py-4">
                         <i class="fa-solid fa-users text-2xl mb-2"></i>
                         <p>Aucun contact disponible</p>
+                        <p class="text-xs">Ajoutez d'abord des contacts pour créer un groupe</p>
                     </div>
                 `;
             }
@@ -212,8 +242,15 @@ async function chargerListeContacts() {
         if (!listeContacts) return;
 
         listeContacts.innerHTML = "";
+        
+        
+        const compteurDiv = document.createElement("div");
+        compteurDiv.id = "compteurContacts";
+        compteurDiv.className = "mb-3 p-2 bg-blue-50 rounded-md text-sm text-blue-700";
+        compteurDiv.innerHTML = `<span id="nombreSelectionnes">0</span> contact(s) sélectionné(s) - Minimum requis: 2`;
+        listeContacts.appendChild(compteurDiv);
 
-        utilisateurConnecte.liste_contacts.forEach((contact) => {
+        utilisateurConnecte.liste_contacts.forEach((contact, index) => {
             const contactDiv = document.createElement("div");
             contactDiv.className = "flex items-center p-2 hover:bg-gray-100 rounded-lg cursor-pointer contact-item";
             contactDiv.dataset.nom = contact.nom.toLowerCase();
@@ -225,11 +262,12 @@ async function chargerListeContacts() {
                 .toUpperCase()
                 .substring(0, 2);
 
-            // CORRECTION: Utiliser contact.id au lieu d'un index
-            const contactId = contact.id || `contact_${Date.now()}_${Math.random()}`;
+             
+            const contactId = contact.id || `contact_${index}`;
+            console.log(`Contact ${contact.nom} - ID: ${contactId}`);
 
             contactDiv.innerHTML = `
-                <input type="checkbox" id="contact_${contactId}" name="membresGroupe" value="${contactId}" class="mr-3 rounded text-fuchsia-500 focus:ring-fuchsia-500">
+                <input type="checkbox" id="contact_${contactId}" name="membresGroupe" value="${contactId}" class="mr-3 rounded text-fuchsia-500 focus:ring-fuchsia-500 contact-checkbox">
                 <div class="w-8 h-8 rounded-full bg-fuchsia-200 flex items-center justify-center mr-3">
                     ${contact.photo_profil ? 
                         `<img src="${contact.photo_profil}" alt="${contact.nom}" class="w-8 h-8 rounded-full object-cover">` : 
@@ -242,21 +280,46 @@ async function chargerListeContacts() {
                 </div>
                 ${contact.favori ? '<i class="fa-solid fa-star text-yellow-500 text-sm"></i>' : ''}
             `;
-
+ 
             contactDiv.addEventListener("click", (e) => {
                 if (e.target.type !== "checkbox") {
                     const checkbox = contactDiv.querySelector('input[type="checkbox"]');
                     checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
                 }
+            });
+
+            const checkbox = contactDiv.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener("change", () => {
+                mettreAJourCompteur();
             });
 
             listeContacts.appendChild(contactDiv);
         });
+  
+        function mettreAJourCompteur() {
+            const nombreSelectionnes = document.querySelectorAll('.contact-checkbox:checked').length;
+            const compteurSpan = document.getElementById('nombreSelectionnes');
+            const compteurDiv = document.getElementById('compteurContacts');
+            
+            if (compteurSpan) {
+                compteurSpan.textContent = nombreSelectionnes;
+            }
+             
+            if (compteurDiv) {
+                if (nombreSelectionnes >= 2) {
+                    compteurDiv.className = "mb-3 p-2 bg-green-50 rounded-md text-sm text-green-700";
+                } else {
+                    compteurDiv.className = "mb-3 p-2 bg-blue-50 rounded-md text-sm text-blue-700";
+                }
+            }
+        }
         
     } catch (error) {
         console.error("Erreur lors du chargement des contacts:", error);
     }
 }
+
 
 
 function filtrerContacts(terme) {
@@ -282,7 +345,6 @@ async function gererAjoutGroupe(formulaire, popup) {
     const texteErreur = popup.querySelector("#texteErreurGroupe");
     const confirmerBtn = popup.querySelector("#confirmerAjoutGroupe");
     
-    // Masquer les messages précédents
     messageErreur?.classList.add("hidden");
     messageSucces?.classList.add("hidden");
     
@@ -293,9 +355,16 @@ async function gererAjoutGroupe(formulaire, popup) {
         afficherErreurGroupe("Le nom du groupe est obligatoire.", messageErreur, texteErreur);
         return;
     }
+      
+    const contactsSelectionnes = formulaire.querySelectorAll('input[name="membresGroupe"]:checked');
+    if (contactsSelectionnes.length < 2) {  
+        afficherErreurGroupe("Veuillez sélectionner au moins 2 contacts pour créer un groupe.", messageErreur, texteErreur);
+        return;
+    }
     
     confirmerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Création en cours...';
     confirmerBtn.disabled = true;
+     
     
     try {
         const utilisateurConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte'));
@@ -332,7 +401,7 @@ async function gererAjoutGroupe(formulaire, popup) {
         
         setTimeout(() => {
             popup.remove();
-            // CORRECTION: S'assurer que la fonction existe
+            
             if (typeof window.rafraichirContactsGroupes === 'function') {
                 window.rafraichirContactsGroupes();
             }
@@ -454,12 +523,11 @@ export function ouvrirPopupAjoutGroupe() {
         return;
     }
     
-    console.log("Création du popup..."); // Debug
+    console.log("Création du popup...");  
     
     const popup = AjoutGroupePopup();
     document.body.appendChild(popup);
-    
-    // Animation d'ouverture
+     
     setTimeout(() => {
         popup.classList.add('opacity-100');
         popup.style.opacity = '1';
@@ -473,10 +541,14 @@ export function ouvrirPopupAjoutGroupe() {
 }
 
 
- 
-function recupererMembresSelectionnes(formulaire, utilisateurConnecte) {
-    const membresSelectionnes = Array.from(formulaire.querySelectorAll('input[name="membresGroupe"]:checked'))
-        .map(checkbox => checkbox.value);
+ function recupererMembresSelectionnes(formulaire, utilisateurConnecte) {
+    const checkboxesSelectionnes = formulaire.querySelectorAll('input[name="membresGroupe"]:checked');
+    console.log("Checkboxes sélectionnées:", checkboxesSelectionnes.length);
+    
+    const membresSelectionnes = Array.from(checkboxesSelectionnes).map(checkbox => {
+        console.log("Checkbox value:", checkbox.value);
+        return checkbox.value;
+    });
     
     const membresDuGroupe = [{
         utilisateur_id: utilisateurConnecte.id,
@@ -485,10 +557,16 @@ function recupererMembresSelectionnes(formulaire, utilisateurConnecte) {
         ajoute_par: utilisateurConnecte.id
     }];
 
-    // CORRECTION: Vérifier que les contacts existent
     membresSelectionnes.forEach(contactId => {
-        const contact = utilisateurConnecte.liste_contacts.find(c => c.id === contactId);
+        console.log("Recherche du contact avec ID:", contactId);
+        console.log("Liste des contacts disponibles:", utilisateurConnecte.liste_contacts?.map(c => ({id: c.id, nom: c.nom})));
+        
+        const contact = utilisateurConnecte.liste_contacts?.find(c => 
+            c.id === contactId || c.id === parseInt(contactId)
+        );
+        
         if (contact) {
+            console.log("Contact trouvé:", contact.nom);
             membresDuGroupe.push({
                 utilisateur_id: contact.id,
                 role: "membre", 
@@ -496,12 +574,14 @@ function recupererMembresSelectionnes(formulaire, utilisateurConnecte) {
                 ajoute_par: utilisateurConnecte.id
             });
         } else {
-            console.warn(`Contact avec ID ${contactId} non trouvé`);
+            console.warn(`Contact avec ID ${contactId} non trouvé dans:`, utilisateurConnecte.liste_contacts);
         }
     });
 
+    console.log("Membres finaux du groupe:", membresDuGroupe);
     return membresDuGroupe;
 }
+
 
 
 function testerDonneesUtilisateur() {
@@ -518,3 +598,4 @@ async function genererPhotoGroupe(photoFile, nomGroupe) {
     }
     return genererPhotoGroupeParDefaut(nomGroupe);
 }
+

@@ -5,67 +5,69 @@ const URL_STATUTS = "https://devchat-jsi7.onrender.com/statuts";
 const URL_APPELS = "https://devchat-jsi7.onrender.com/appels";
 const URL_PARAMETRES_APPLICATION = "https://devchat-jsi7.onrender.com/parametres_application";
 
-import { ouvrirPopupAjoutContact } from "./ajoutvue.js";
-import { ouvrirPopupAjoutGroupe } from "./groupevue.js";
+
+import { ouvrirPopupAjoutContact } from "./ajoutvue";
 import { initialiserArchivage } from "./archivage";
 import { initialiserDiffusion } from "./diffusion";
-
+import { initialiserEpinglage, ajouterMenuEpinglage,reorganiserConversations } from "./epingle.js";
+ 
 let utilisateurConnecte = null;
 let contactsAffiches = [];
 let groupesAffiches = [];
 let filtreActuel = 'tous';  
+window.filtreActuel = 'tous';
 
 export function ComposantAccueil(e) {
     e.innerHTML = `
     <div class="w-full h-[100vh] flex flex-row">
-        <div class="sidebar w-[15%] h-full bg-white flex flex-col gap-16 border-2 border-fuchsia-900">
+        <div class="sidebar w-[15%] h-full bg-white flex flex-col gap-20 border-2 b ">
             <div class="logo w-full h-[10%] bg-white shadow-lg flex flex-row justify-center items-center transform hover:-translate-y-1 transition-transform duration-300">
-                <img src="/logo-transparent.png" alt="" class="w-[60px]">
-                <img src="/flower.jpeg" alt="" class="w-[30px]">
+                <img src="src/img/logo-transparent.png" alt="" class="w-[60px]">
+                <img src="src/img/flower.jpeg" alt="" class="w-[30px]">
             </div>
 
             <div class="iconeMenu w-full h-[60%] flex flex-col justify-center items-center gap-4">
-                <div class="contact flex flex-col h-[100px] justify-center items-center w-full border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="buttonAjout w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
+                <div class="contact flex flex-col h-[100px] justify-center items-center w-full  hover:-translate-y-1 transition-transform duration-300">
+                    <div class="buttonAjout w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-user-plus text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Ajouter Contact</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Ajouter Contact</h6>
                 </div>
-                <div class="groupes flex flex-col justify-center items-center w-full h-[100px] border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="boutonAjoutGroup w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
+                <div class="groupes flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                    <div class="boutonAjoutGroup w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-people-group text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Ajouter groupe</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Ajouter groupe</h6>
                 </div>
-                <div class="Archivage flex flex-col justify-center items-center w-full h-[100px] border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="boutonArchive w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
+                <div class="Archivage flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                    <div class="boutonArchive w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-box-archive text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Archiver</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Archiver</h6>
                 </div>
-                <div class="Diffusion flex flex-col justify-center items-center w-full h-[100px] border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="boutonDiffusion w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
+                <div class="Diffusion flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                    <div class="boutonDiffusion w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-broadcast-tower text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Diffusion</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Diffusion</h6>
                 </div>
-                <div class="Statut flex flex-col justify-center items-center w-full h-[100px] border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="boutonStatut w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
+                <div class="Statut flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                    <div class="boutonStatut w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-circle-info text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Statut</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Statut</h6>
                 </div>
-                <div class="Deconnecion flex flex-col justify-center items-center w-full h-[100px] border-b-2 shadow-lg border-fuchsia-900 hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
-                    <div class="boutonDeconnexion w-[30px] h-[30px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2" id="btnDeconnexion">
+                <div class="Deconnecion flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
+                    <div class="boutonDeconnexion w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2" id="btnDeconnexion">
                         <i class="fa-solid fa-right-from-bracket text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
-                    <h6 class="text-fuchsia-500 text-[0.6rem]">Deconnexion</h6>
+                    <h6 class="text-fuchsia-500 text-[0.8rem]">Deconnexion</h6>
                 </div>
             </div>
         </div>
 
         <div class="contactGroupe w-[85%] h-full flex flex-col justify-between">
-            <div class="navbarRecherche w-full h-[10.5%] bg-fuchsia-900 shadow-lg flex flex-row justify-between items-center">
+            <div class="navbarRecherche w-full h-[10.5%]   shadow-lg flex flex-row justify-between items-center">
                 <div class="relative w-[50%]">
                     <input 
                         id="rechercheInput"
@@ -85,25 +87,37 @@ export function ComposantAccueil(e) {
             </div>
             
             <div class="filter h-[10%] w-full bg-white flex items-center text-gray-600 font-medium border-b shadow-sm">
-                <button id="filtreTous" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full bg-gray-100 hover:bg-gray-100 transition duration-300 filtre-btn active">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                    Tous
-                </button>
-                <button id="filtreNonLus" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
-                    <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                    Non lus
-                </button>
-                <button id="filtreGroupes" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
-                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M3 20h5v-2a4 4 0 00-3-3.87M16 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                    </svg>
-                    Groupes
-                </button>
-            </div>
+    <button id="filtreTous" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full bg-gray-100 hover:bg-gray-100 transition duration-300 filtre-btn active">
+        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        Tous
+    </button>
+    <button id="filtreNonLus" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
+        <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        Non lus
+    </button>
+    <button id="filtreGroupes" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
+        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M3 20h5v-2a4 4 0 00-3-3.87M16 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+        Groupes
+    </button>
+    <button id="filtreFavoris" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
+        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+        </svg>
+        Favoris
+    </button>
+    <button id="filtreArchives" class="flex items-center gap-2 px-4 py-2 text-slate-500 rounded-full hover:bg-gray-100 transition duration-300 filtre-btn">
+    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+    </svg>
+    Archives
+</button>
+</div>
 
             <div class="ALL w-full h-[85%] flex flex-row justify-between">
                 <div class="espace w-[1%] h-full"></div>
@@ -147,6 +161,10 @@ export function ComposantAccueil(e) {
 
 function initialiserEvenements(container) {
      
+const filtreArchives = container.querySelector("#filtreArchives");
+if (filtreArchives) {
+    filtreArchives.addEventListener("click", () => changerFiltre('archives'));
+}
     const btnDeconnexion = container.querySelector("#btnDeconnexion");
     if (btnDeconnexion) {
         btnDeconnexion.addEventListener("click", gererDeconnexion);
@@ -202,7 +220,10 @@ function initialiserEvenements(container) {
     if (filtreGroupes) {
         filtreGroupes.addEventListener("click", () => changerFiltre('groupes'));
     }
-
+    const filtreFavoris = container.querySelector("#filtreFavoris");
+if (filtreFavoris) {
+    filtreFavoris.addEventListener("click", () => changerFiltre('favoris'));
+}
     
     const rechercheInput = container.querySelector("#rechercheInput");
     if (rechercheInput) {
@@ -212,6 +233,7 @@ function initialiserEvenements(container) {
     }
     initialiserArchivage();
      initialiserDiffusion();
+        initialiserEpinglage();
 }
 
 async function chargerUtilisateurConnecte() {
@@ -280,7 +302,7 @@ async function chargerContactsEtGroupes() {
 
 function changerFiltre(nouveauFiltre) {
     filtreActuel = nouveauFiltre;
-    
+    window.filtreActuel = nouveauFiltre;
     // Mettre à jour l'apparence des boutons de filtre
     document.querySelectorAll('.filtre-btn').forEach(btn => {
         btn.classList.remove('active', 'bg-gray-100');
@@ -296,7 +318,9 @@ function changerFiltre(nouveauFiltre) {
     afficherContactsGroupes();
 }
 
-function afficherContactsGroupes() {
+ // Dans accueilvue.js - Modifier la fonction afficherContactsGroupes()
+
+async function afficherContactsGroupes() {
     const container = document.querySelector("#listeContactsGroupes");
     if (!container) return;
     
@@ -317,44 +341,200 @@ function afficherContactsGroupes() {
         case 'groupes':
             elements = [...groupesAffiches];
             break;
+        case 'favoris':
+            elements = [...contactsAffiches, ...groupesAffiches].filter(item => item.favori === true);
+            break;
+        case 'archives':
+            // CORRECTION: Charger les conversations archivées
+            elements = await chargerConversationsArchivees();
+            break;
     }
-    window.rafraichirContactsGroupes = async () => {
-    if (utilisateurConnecte) {
-        await chargerContactsEtGroupes();
-    }
-};
-    // Filtrer les éléments archivés
-    elements = elements.filter(item => {
-        const estGroupe = !!item.nom && !item.telephone;
-        const conversation = utilisateurConnecte.conversations?.find(conv => {
-            if (estGroupe) {
-                return conv.groupe_id === item.id;
-            } else {
-                return conv.participants?.includes(item.id);
-            }
+
+    // Pour tous les filtres SAUF archives, filtrer les éléments archivés
+    if (filtreActuel !== 'archives') {
+        elements = elements.filter(item => {
+            const estGroupe = !!item.nom && !item.telephone;
+            const conversation = utilisateurConnecte.conversations?.find(conv => {
+                if (estGroupe) {
+                    return conv.groupe_id === item.id;
+                } else {
+                    return conv.participants?.includes(item.id);
+                }
+            });
+            
+            return !conversation || !conversation.archive;
         });
-        
-        return !conversation || !conversation.archive;
-    });
+    }
     
-    // NOUVEAU: Trier les éléments par date d'ajout (plus récent en premier)
+    // Trier les éléments par date d'ajout (plus récent en premier)
     elements.sort((a, b) => {
         const dateA = new Date(a.date_ajout || a.date_creation || 0);
         const dateB = new Date(b.date_ajout || b.date_creation || 0);
-        return dateB - dateA; // Tri décroissant (plus récent en premier)
+        return dateB - dateA;
     });
     
     container.innerHTML = elements.map(item => creerElementContactGroupe(item)).join('');
     
-    container.querySelectorAll('.contact-groupe-item').forEach(element => {
-        element.addEventListener('click', () => {
-            const id = element.dataset.id;
-            const type = element.dataset.type;
-            selectionnerConversation(id, type);
+    container.querySelectorAll('.contact-groupe-item').forEach(e => {
+        e.addEventListener('click', () => {
+            selectionnerConversation(e.dataset.id, e.dataset.type);
         });
+        
+        ajouterMenuEpinglage(e, e.dataset.id, e.dataset.type);
     });
+    reorganiserConversations();
 }
 
+function creerElementContactGroupe(item) {
+    const estGroupe = !!item.nom && !item.telephone;  
+    const nom = estGroupe ? item.nom : (item.nom_personnalise || item.nom);
+    const photo = item.photo_profil || item.photo_groupe || "src/img/default-avatar.png";
+    
+    const utilisateurConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
+    const conversation = utilisateurConnecte.conversations?.find(conv => {
+        if (estGroupe) {
+            return conv.groupe_id === item.id;
+        } else {
+            return conv.participants?.includes(item.id);
+        }
+    });
+    const messagesNonLus = conversation ? conversation.messages_non_lus : 0;
+    
+    // Récupérer le dernier message de la conversation
+    let dernierMessage = "Aucun message";
+    let heureMessage = "";
+    
+    if (conversation && conversation.messages && conversation.messages.length > 0) {
+        const dernierMsg = conversation.messages[conversation.messages.length - 1];
+        const contenu = dernierMsg.contenu || dernierMsg.texte || "";
+        dernierMessage = contenu.length > 30 ? contenu.substring(0, 30) + "..." : contenu;
+        heureMessage = new Date(dernierMsg.timestamp || dernierMsg.date_envoi).toLocaleTimeString('fr-FR', {
+            hour: '2-digit', 
+            minute: '2-digit'
+        });
+    } else if (estGroupe) {
+        dernierMessage = "Groupe créé";
+    } else {
+        dernierMessage = "Contact ajouté";
+        if (item.date_ajout) {
+            heureMessage = new Date(item.date_ajout).toLocaleTimeString('fr-FR', {
+                hour: '2-digit', 
+                minute: '2-digit'
+            });
+        }
+    }
+    
+    const badgeNonLus = messagesNonLus > 0 ? 
+        `<span class="bg-fuchsia-500 text-white text-xs rounded-full px-2 py-1 ml-2">${messagesNonLus}</span>` : '';
+    
+    const iconType = estGroupe ? 
+        '<i class="fa-solid fa-users text-blue-500 text-xs"></i>' : 
+        '<i class="fa-solid fa-user text-green-500 text-xs"></i>';
+    
+    const estEpingle = conversation?.epingle || false;
+    const estSilencieux = conversation?.silencieux || false;
+    
+   
+    
+    
+    return `
+        <div class="contact-groupe-item flex items-center bg-white h-[70px] rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition duration-300 mb-2 p-3 ${estEpingle ? 'ring-2 ring-fuchsia-300' : ''}" 
+             data-id="${item.id}" 
+             data-type="${estGroupe ? "groupe" : "contact"}">
+            <div class="relative">
+                <img src="${photo}" alt="Profil" class="w-12 h-12 rounded-full object-cover ${filtreActuel === 'archives' ? 'grayscale' : ''}">
+                <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-1">
+                    ${iconType}
+                </div>
+                ${estEpingle ? '<div class="absolute -top-1 -right-1 bg-fuchsia-500 text-white rounded-full p-1"><i class="fa-solid fa-thumbtack text-[8px]"></i></div>' : ''}
+                ${filtreActuel === 'archives' ? '<div class="absolute inset-0 bg-black bg-opacity-20 rounded-full flex items-center justify-center"><i class="fa-solid fa-archive text-white text-xs"></i></div>' : ''}
+            </div>
+            <div class="ml-4 flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <h4 class="font-semibold text-gray-800 truncate ${filtreActuel === 'archives' ? 'text-gray-500' : ''}">${nom}</h4>
+                        ${estSilencieux ? '<i class="fa-solid fa-bell-slash text-gray-400 text-xs"></i>' : ''}
+                        ${filtreActuel === 'archives' ? '<span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">Archivé</span>' : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-gray-500">${heureMessage}</span>
+                        ${filtreActuel === 'archives' ? 
+                            `<button class="btn-desarchiver bg-green-500 hover:bg-green-600 text-white text-xs px-2 py-1 rounded transition-colors" 
+                                    data-id="${item.id}" 
+                                    data-type="${estGroupe ? "groupe" : "contact"}"
+                                    onclick="event.stopPropagation(); window.desarchiverConversation('${item.id}', '${estGroupe ? "groupe" : "contact"}')">
+                                <i class="fa-solid fa-box-open mr-1"></i>Restaurer
+                            </button>` 
+                            : badgeNonLus
+                        }
+                        ${!filtreActuel === 'archives' ? badgeNonLus : ''}
+                       
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 truncate ${filtreActuel === 'archives' ? 'text-gray-400' : ''}">${dernierMessage}</p>
+                ${item.favori && filtreActuel !== 'archives' ? '<i class="fa-solid fa-star text-yellow-400 text-xs"></i>' : ""}
+            </div>
+        </div>
+    `;
+}
+  
+
+window.rafraichirContactsGroupes = rafraichirContactsGroupes;
+
+async function chargerConversationsArchivees() {
+    try {
+        
+        const conversationsArchivees = utilisateurConnecte.conversations?.filter(conv => conv.archive === true) || [];
+        
+        if (conversationsArchivees.length === 0) {
+            // Afficher un message si aucune archive
+            const container = document.querySelector("#listeContactsGroupes");
+            if (container) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fa-solid fa-archive text-4xl text-gray-300 mb-2"></i>
+                        <p>Aucune conversation archivée</p>
+                        <p class="text-sm">Vos conversations archivées apparaîtront ici</p>
+                    </div>
+                `;
+            }
+            return [];
+        }
+        
+        // Récupérer les groupes pour obtenir les détails
+        const responseGroupes = await fetch(URL_GROUPES);
+        const groupes = await responseGroupes.json();
+        
+        const archives = [];
+        
+        for (const conv of conversationsArchivees) {
+            let item = null;
+            
+            if (conv.groupe_id) {
+               
+                item = groupes.find(g => g.id === conv.groupe_id);
+                if (item) {
+                    item.date_archivage = conv.date_archivage;
+                    archives.push(item);
+                }
+            } else if (conv.participants) {
+                
+                const autreParticipant = conv.participants.find(p => p !== utilisateurConnecte.id);
+                item = utilisateurConnecte.liste_contacts?.find(c => c.id === autreParticipant);
+                if (item) {
+                    item.date_archivage = conv.date_archivage;
+                    archives.push(item);
+                }
+            }
+        }
+        
+        return archives;
+        
+    } catch (error) {
+        console.error('Erreur lors du chargement des archives:', error);
+        return [];
+    }
+}
 
 export async function rechargerApresArchivage() {
     if (utilisateurConnecte) {
@@ -371,79 +551,6 @@ export async function rechargerApresArchivage() {
     }
 }
 
-function creerElementContactGroupe(item) {
-    const estGroupe = !!item.nom && !item.telephone;  
-    const nom = estGroupe ? item.nom : (item.nom_personnalise || item.nom);
-    const photo = item.photo_profil || item.photo_groupe || "src/img/default-avatar.png";
-    
-    // Trouver la conversation associée
-    const conversation = utilisateurConnecte.conversations?.find(conv => 
-        conv.participants?.includes(item.id) || conv.groupe_id === item.id
-    );
-    
-    const messagesNonLus = conversation ? conversation.messages_non_lus : 0;
-    
-    // NOUVEAU: Récupérer le dernier message de la conversation
-    let dernierMessage = "Aucun message";
-    let heureMessage = "";
-    
-    if (conversation && conversation.messages && conversation.messages.length > 0) {
-        const dernierMsg = conversation.messages[conversation.messages.length - 1];
-        
-        // Tronquer le message s'il est trop long
-        const contenu = dernierMsg.contenu || dernierMsg.texte || "";
-        dernierMessage = contenu.length > 30 ? contenu.substring(0, 30) + "..." : contenu;
-        
-        // Formater l'heure
-        heureMessage = new Date(dernierMsg.timestamp || dernierMsg.date_envoi).toLocaleTimeString('fr-FR', {
-            hour: '2-digit', 
-            minute: '2-digit'
-        });
-    } else if (estGroupe) {
-        dernierMessage = "Groupe créé";
-    } else {
-        dernierMessage = "Contact ajouté";
-        // Pour un nouveau contact, afficher l'heure d'ajout
-        if (item.date_ajout) {
-            heureMessage = new Date(item.date_ajout).toLocaleTimeString('fr-FR', {
-                hour: '2-digit', 
-                minute: '2-digit'
-            });
-        }
-    }
-    
-    const badgeNonLus = messagesNonLus > 0 ? 
-        `<span class="bg-fuchsia-500 text-white text-xs rounded-full px-2 py-1 ml-2">${messagesNonLus}</span>` : '';
-    
-    const iconType = estGroupe ? 
-        '<i class="fa-solid fa-users text-blue-500 text-xs"></i>' : 
-        '<i class="fa-solid fa-user text-green-500 text-xs"></i>';
-    
-    return `
-        <div class="contact-groupe-item flex items-center bg-white h-[70px] rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition duration-300 mb-2 p-3" 
-             data-id="${item.id}" 
-             data-type="${estGroupe ? 'groupe' : 'contact'}">
-            <div class="relative">
-                <img src="${photo}" alt="Profil" class="w-12 h-12 rounded-full object-cover">
-                <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-1">
-                    ${iconType}
-                </div>
-            </div>
-            <div class="ml-4 flex-1 min-w-0">
-                <div class="flex justify-between items-center">
-                    <h4 class="font-semibold text-gray-800 truncate">${nom}</h4>
-                    <div class="flex items-center">
-                        <span class="text-sm text-gray-500">${heureMessage}</span>
-                        ${badgeNonLus}
-                    </div>
-                </div>
-                <p class="text-sm text-gray-600 truncate">${dernierMessage}</p>
-                ${item.favori ? '<i class="fa-solid fa-star text-yellow-400 text-xs"></i>' : ''}
-            </div>
-        </div>
-    `;
-}
-window.rafraichirContactsGroupes = rafraichirContactsGroupes;
 
 function filtrerContactsGroupes(termeRecherche) {
     const elements = document.querySelectorAll('.contact-groupe-item');
@@ -455,7 +562,38 @@ function filtrerContactsGroupes(termeRecherche) {
     });
 }
 
- 
+ window.desarchiverConversation = async function(conversationId, conversationType) {
+    try {
+        const { restaurerConversation } = await import('./archivage.js');
+        const succes = await restaurerConversation(conversationId, conversationType);
+        
+        if (succes) {
+            // Recharger l'affichage après désarchivage
+            await rechargerApresArchivage();
+            
+            // Si on est dans le filtre archives et qu'il n'y a plus d'archives, afficher un message
+            const listeContainer = document.querySelector("#listeContactsGroupes");
+            if (listeContainer && listeContainer.children.length === 0 && filtreActuel === 'archives') {
+                listeContainer.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fa-solid fa-archive text-4xl text-gray-300 mb-2"></i>
+                        <p>Aucune conversation archivée</p>
+                        <p class="text-sm">Vos conversations archivées apparaîtront ici</p>
+                    </div>
+                `;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur lors du désarchivage:', error);
+        // Utiliser la fonction de notification existante si disponible
+        if (typeof afficherNotification === 'function') {
+            afficherNotification('Erreur lors de la restauration', 'error');
+        } else {
+            alert('Erreur lors de la restauration de la conversation');
+        }
+    }
+};
+
  
 let conversationActive = null;
 let messagesAffiches = [];
