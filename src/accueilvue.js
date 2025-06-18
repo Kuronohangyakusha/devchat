@@ -5,11 +5,12 @@ const URL_STATUTS = "https://devchat-jsi7.onrender.com/statuts";
 const URL_APPELS = "https://devchat-jsi7.onrender.com/appels";
 const URL_PARAMETRES_APPLICATION = "https://devchat-jsi7.onrender.com/parametres_application";
 
-
 import { ouvrirPopupAjoutContact } from "./ajoutvue";
 import { initialiserArchivage } from "./archivage";
 import { initialiserDiffusion } from "./diffusion";
 import { initialiserEpinglage, ajouterMenuEpinglage,reorganiserConversations } from "./epingle.js";
+import { initialiserStatut } from "./status.js";
+import { initialiserAppels, ajouterBoutonsAppel } from "./appel.js";
  
 let utilisateurConnecte = null;
 let contactsAffiches = [];
@@ -21,37 +22,37 @@ export function ComposantAccueil(e) {
     e.innerHTML = `
     <div class="w-full h-[100vh] flex flex-row">
         <div class="sidebar w-[15%] h-full bg-white flex flex-col gap-20 border-2 b ">
-            <div class="logo w-full h-[10%] bg-white shadow-lg flex flex-row justify-center items-center transform hover:-translate-y-1 transition-transform duration-300">
-                <img src="src/img/logo-transparent.png" alt="" class="w-[60px]">
-                <img src="src/img/flower.jpeg" alt="" class="w-[30px]">
+            <div class="logo w-full h-[10%] bg-white shadow-lg flex flex-row justify-center items-center transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
+                <img src="img/logo-transparent.png" alt="" class="w-[60px]">
+                <img src="img/flower.jpeg" alt="" class="w-[30px]">
             </div>
 
             <div class="iconeMenu w-full h-[60%] flex flex-col justify-center items-center gap-4">
-                <div class="contact flex flex-col h-[100px] justify-center items-center w-full  hover:-translate-y-1 transition-transform duration-300">
+                <div class="contact flex flex-col h-[100px] justify-center items-center w-full  hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                     <div class="buttonAjout w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-user-plus text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
                     <h6 class="text-fuchsia-500 text-[0.8rem]">Ajouter Contact</h6>
                 </div>
-                <div class="groupes flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                <div class="groupes flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                     <div class="boutonAjoutGroup w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-people-group text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
                     <h6 class="text-fuchsia-500 text-[0.8rem]">Ajouter groupe</h6>
                 </div>
-                <div class="Archivage flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                <div class="Archivage flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                     <div class="boutonArchive w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-box-archive text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
                     <h6 class="text-fuchsia-500 text-[0.8rem]">Archiver</h6>
                 </div>
-                <div class="Diffusion flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                <div class="Diffusion flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                     <div class="boutonDiffusion w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-broadcast-tower text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
                     <h6 class="text-fuchsia-500 text-[0.8rem]">Diffusion</h6>
                 </div>
-                <div class="Statut flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300">
+                <div class="Statut flex flex-col justify-center items-center w-full h-[100px]   hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
                     <div class="boutonStatut w-[40px] h-[40px] rounded-full bg-white flex text-center items-center justify-center border-solid border-fuchsia-300 border-2">
                         <i class="fa-solid fa-circle-info text-fuchsia-300 text-[0.9rem]"></i>
                     </div>
@@ -231,6 +232,15 @@ if (filtreFavoris) {
             filtrerContactsGroupes(e.target.value);
         });
     }
+     import('./status.js').then(({ mettreAJourIndicateurStatut }) => {
+        // Vérifier le statut au chargement
+        mettreAJourIndicateurStatut();
+        
+        // Vérifier périodiquement (toutes les 30 secondes)
+        setInterval(mettreAJourIndicateurStatut, 30000);
+    });
+      initialiserAppels();
+    initialiserStatut();
     initialiserArchivage();
      initialiserDiffusion();
         initialiserEpinglage();
@@ -261,12 +271,10 @@ async function chargerUtilisateurConnecte() {
         console.error("Erreur lors du chargement de l'utilisateur:", error);
     }
 }
-
-
-// Dans accueil.js - Modifier la fonction chargerContactsEtGroupes pour recharger l'utilisateur
+ 
 async function chargerContactsEtGroupes() {
     try {
-        // Recharger les données de l'utilisateur connecté depuis localStorage
+         
         const userConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
         
         // Recharger depuis l'API pour avoir les données les plus récentes
@@ -434,13 +442,16 @@ function creerElementContactGroupe(item) {
     const estEpingle = conversation?.epingle || false;
     const estSilencieux = conversation?.silencieux || false;
     
-   
-    
-    
     return `
-        <div class="contact-groupe-item flex items-center bg-white h-[70px] rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition duration-300 mb-2 p-3 ${estEpingle ? 'ring-2 ring-fuchsia-300' : ''}" 
+        <div class="contact-groupe-item flex items-center bg-white h-[70px] rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition duration-300 mb-2 p-3 ${estEpingle ? 'ring-2 ring-fuchsia-300' : ''} relative group" 
              data-id="${item.id}" 
              data-type="${estGroupe ? "groupe" : "contact"}">
+            
+            <!-- Indicateur de clic droit qui apparaît au hover -->
+            <div class="absolute top-2 right-2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                <i class="fa-solid fa-mouse-pointer mr-1"></i>Clic droit pour plus d'options
+            </div>
+            
             <div class="relative">
                 <img src="${photo}" alt="Profil" class="w-12 h-12 rounded-full object-cover ${filtreActuel === 'archives' ? 'grayscale' : ''}">
                 <div class="absolute -bottom-1 -right-1 bg-white rounded-full p-1">
@@ -468,7 +479,6 @@ function creerElementContactGroupe(item) {
                             : badgeNonLus
                         }
                         ${!filtreActuel === 'archives' ? badgeNonLus : ''}
-                       
                     </div>
                 </div>
                 <p class="text-sm text-gray-600 truncate ${filtreActuel === 'archives' ? 'text-gray-400' : ''}">${dernierMessage}</p>
@@ -667,15 +677,30 @@ function afficherConversation(item, type) {
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <button class="p-2 hover:bg-gray-100 rounded-full">
-                    <i class="fa-solid fa-video text-gray-600"></i>
-                </button>
-                <button class="p-2 hover:bg-gray-100 rounded-full">
-                    <i class="fa-solid fa-phone text-gray-600"></i>
-                </button>
-                <button class="p-2 hover:bg-gray-100 rounded-full">
-                    <i class="fa-solid fa-ellipsis-vertical text-gray-600"></i>
-                </button>
+              
+ 
+    <div class="relative">
+        <button id="menuConversation" class="p-2 hover:bg-gray-100 rounded-full">
+            <i class="fa-solid fa-ellipsis-vertical text-gray-600"></i>
+        </button>
+        <!-- Menu déroulant -->
+        <div id="dropdownMenu" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+            <button id="btnRechercherMessages" class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 rounded-t-lg">
+                <i class="fa-solid fa-search text-gray-600"></i>
+                Rechercher dans la conversation
+            </button>
+            <button class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
+                <i class="fa-solid fa-bell-slash text-gray-600"></i>
+                Mettre en sourdine
+            </button>
+            <button class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 rounded-b-lg">
+                <i class="fa-solid fa-archive text-gray-600"></i>
+                Archiver
+            </button>
+        </div>
+    </div>
+</div>
+
             </div>
         </div>
 
@@ -713,7 +738,58 @@ function afficherConversation(item, type) {
             </div>
         </div>
     `;
+    setTimeout(() => {
+    const menuBtn = document.getElementById('menuConversation');
+    const dropdown = document.getElementById('dropdownMenu');
+    const btnRechercher = document.getElementById('btnRechercherMessages');
     
+    if (menuBtn && dropdown) {
+        // Gestion du menu déroulant
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+        });
+        
+        // CORRECTION: Améliorer la gestion du clic document
+        const handleDocumentClick = (e) => {
+            // Vérifier si on clique dans la barre de recherche des messages ou ses éléments enfants
+            const barreRecherche = document.getElementById('barreRechercheMessages');
+            
+            // Si la barre de recherche existe et que le clic est à l'intérieur, ne pas fermer le menu
+            if (barreRecherche && (barreRecherche.contains(e.target) || barreRecherche === e.target)) {
+                return;
+            }
+            
+            // Fermer seulement si on clique en dehors du menu ET de la barre de recherche
+            if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        };
+        
+        document.addEventListener('click', handleDocumentClick);
+        
+        // Nettoyer l'ancien événement
+        if (window.currentDocumentClickHandler) {
+            document.removeEventListener('click', window.currentDocumentClickHandler);
+        }
+        window.currentDocumentClickHandler = handleDocumentClick;
+    }
+    
+    if (btnRechercher) {
+        btnRechercher.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.add('hidden');
+            ouvrirRechercheMessages();
+        });
+    }
+}, 100);
+if (type === 'contact') {
+        setTimeout(() => {
+            ajouterBoutonsAppel(item.id, item.nom_personnalise || item.nom);
+        }, 100);
+    }
+ 
     // Ajouter les événements pour l'envoi de messages
     const messageInput = document.getElementById('messageInput');
     const btnEnvoyer = document.getElementById('btnEnvoyerMessage');
@@ -736,10 +812,216 @@ function afficherConversation(item, type) {
         btnEnvoyer.disabled = true;
     }
 }
+
+
+
+ function ouvrirRechercheMessages() {
+    const messagesContainer = document.getElementById('messagesContainer');
+    if (!messagesContainer) return;
+    
+    // Vérifier si la barre existe déjà
+    if (document.getElementById('barreRechercheMessages')) {
+        return; // Ne pas créer une nouvelle barre si elle existe déjà
+    }
+    
+    // Créer la barre de recherche
+    const barreRecherche = document.createElement('div');
+    barreRecherche.id = 'barreRechercheMessages';
+    barreRecherche.className = 'sticky top-0 bg-white border-b border-gray-200 p-3 z-50'; // Augmenter le z-index
+    barreRecherche.innerHTML = `
+        <div class="flex items-center gap-2">
+            <button id="fermerRecherche" class="p-2 hover:bg-gray-100 rounded-full">
+                <i class="fa-solid fa-arrow-left text-gray-600"></i>
+            </button>
+            <div class="flex-1 relative">
+                <input 
+                    id="inputRechercheMessages" 
+                    type="text" 
+                    placeholder="Rechercher dans les messages..." 
+                    class="w-full p-2 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
+                />
+                <i class="fa-solid fa-search text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+            </div>
+            <div id="resultatsCompteur" class="text-sm text-gray-500 min-w-max">
+                0 résultat
+            </div>
+            <button id="resultPrecedent" class="p-2 hover:bg-gray-100 rounded-full disabled:opacity-50" disabled>
+                <i class="fa-solid fa-chevron-up text-gray-600"></i>
+            </button>
+            <button id="resultSuivant" class="p-2 hover:bg-gray-100 rounded-full disabled:opacity-50" disabled>
+                <i class="fa-solid fa-chevron-down text-gray-600"></i>
+            </button>
+        </div>
+    `;
+    
+    messagesContainer.insertBefore(barreRecherche, messagesContainer.firstChild);
+    
+    // Variables pour la recherche
+    let resultatsRecherche = [];
+    let indexActuel = -1;
+    
+    const inputRecherche = document.getElementById('inputRechercheMessages');
+    const compteur = document.getElementById('resultatsCompteur');
+    const btnPrecedent = document.getElementById('resultPrecedent');
+    const btnSuivant = document.getElementById('resultSuivant');
+    const btnFermer = document.getElementById('fermerRecherche');
+    
+    // CORRECTION: Empêcher la propagation des événements sur la barre de recherche
+    barreRecherche.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêcher la fermeture du menu
+    });
+    
+    // Fonction de recherche
+    function rechercherMessages(terme) {
+        // Supprimer les anciens surlignages
+        document.querySelectorAll('.message-surligne').forEach(el => {
+            el.outerHTML = el.innerHTML;
+        });
+        
+        if (!terme.trim()) {
+            resultatsRecherche = [];
+            indexActuel = -1;
+            mettreAJourInterface();
+            return;
+        }
+        
+        resultatsRecherche = [];
+        const messages = document.querySelectorAll('.message-contenu');
+        
+        messages.forEach((message, index) => {
+            const texte = message.textContent.toLowerCase();
+            const termeRecherche = terme.toLowerCase();
+            
+            if (texte.includes(termeRecherche)) {
+                // Surligner le terme trouvé
+                const regex = new RegExp(`(${terme})`, 'gi');
+                const html = message.innerHTML.replace(regex, '<span class="message-surligne bg-yellow-200 px-1 rounded">$1</span>');
+                message.innerHTML = html;
+                
+                resultatsRecherche.push({
+                    element: message.closest('.message-item'),
+                    index: index
+                });
+            }
+        });
+        
+        indexActuel = resultatsRecherche.length > 0 ? 0 : -1;
+        mettreAJourInterface();
+        
+        // Aller au premier résultat
+        if (resultatsRecherche.length > 0) {
+            naviguerVersResultat(0);
+        }
+    }
+    
+    function mettreAJourInterface() {
+        const nbResultats = resultatsRecherche.length;
+        compteur.textContent = nbResultats === 0 ? '0 résultat' : 
+                              nbResultats === 1 ? '1 résultat' : 
+                              `${indexActuel + 1}/${nbResultats} résultats`;
+        
+        btnPrecedent.disabled = indexActuel <= 0;
+        btnSuivant.disabled = indexActuel >= nbResultats - 1;
+    }
+    
+    function naviguerVersResultat(index) {
+        if (index < 0 || index >= resultatsRecherche.length) return;
+        
+        // Supprimer l'ancien highlight
+        document.querySelectorAll('.resultat-actuel').forEach(el => {
+            el.classList.remove('resultat-actuel', 'bg-orange-200');
+        });
+        
+        // Ajouter le nouveau highlight
+        const messageElement = resultatsRecherche[index].element;
+        const surligneElement = messageElement.querySelector('.message-surligne');
+        
+        if (surligneElement) {
+            surligneElement.classList.add('resultat-actuel', 'bg-orange-200');
+            surligneElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        indexActuel = index;
+        mettreAJourInterface();
+    }
+    
+    // Événements avec stopPropagation pour éviter les conflits
+    inputRecherche.addEventListener('input', (e) => {
+        e.stopPropagation();
+        rechercherMessages(e.target.value);
+    });
+    
+    inputRecherche.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêcher la fermeture du menu
+    });
+    
+    inputRecherche.addEventListener('focus', (e) => {
+        e.stopPropagation(); // Empêcher la fermeture du menu
+    });
+    
+    btnPrecedent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (indexActuel > 0) {
+            naviguerVersResultat(indexActuel - 1);
+        }
+    });
+    
+    btnSuivant.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (indexActuel < resultatsRecherche.length - 1) {
+            naviguerVersResultat(indexActuel + 1);
+        }
+    });
+    
+    btnFermer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fermerRechercheMessages();
+    });
+    
+    // CORRECTION: Gérer l'événement Échap proprement
+    const handleEscapeKey = (e) => {
+        if (e.key === 'Escape' && document.getElementById('barreRechercheMessages')) {
+            fermerRechercheMessages();
+        }
+    };
+    
+    document.addEventListener('keydown', handleEscapeKey);
+    
+    // Stocker la référence pour pouvoir la supprimer plus tard
+    barreRecherche._escapeHandler = handleEscapeKey;
+    
+    // Focus sur l'input après un petit délai
+    setTimeout(() => {
+        inputRecherche.focus();
+    }, 100);
+}
+
+
+ function fermerRechercheMessages() {
+    const barreRecherche = document.getElementById('barreRechercheMessages');
+    if (!barreRecherche) return;
+    
+    // Supprimer l'événement Échap associé à cette barre
+    if (barreRecherche._escapeHandler) {
+        document.removeEventListener('keydown', barreRecherche._escapeHandler);
+    }
+    
+    // Supprimer tous les surlignages
+    document.querySelectorAll('.message-surligne').forEach(el => {
+        el.outerHTML = el.innerHTML;
+    });
+    
+    document.querySelectorAll('.resultat-actuel').forEach(el => {
+        el.classList.remove('resultat-actuel', 'bg-orange-200');
+    });
+    
+    // Supprimer la barre de recherche
+    barreRecherche.remove();
+}
+
 let dernierTimestampMessage = null;
 let intervalleRefreshRapide = null;
 
-// Fonction améliorée pour charger les messages
 async function chargerMessages(contactId, type) {
     try {
         const response = await fetch(URL_MESSAGES);
@@ -750,13 +1032,21 @@ async function chargerMessages(contactId, type) {
         if (type === 'groupe') {
             conversationId = `conv_group_${contactId}`;
         } else {
-            conversationId = `conv_contact_${contactId}`;
+            // Générer un ID de conversation cohérent pour les conversations individuelles
+            conversationId = genererIdConversation(utilisateurConnecte.id, contactId);
         }
         
         // Filtrer les messages pour cette conversation
-        const nouveauxMessages = tousLesMessages.filter(message => 
-            message.conversation_id === conversationId
-        ).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        const nouveauxMessages = tousLesMessages.filter(message => {
+            if (type === 'groupe') {
+                return message.conversation_id === conversationId;
+            } else {
+                // Pour les conversations individuelles, vérifier les deux sens
+                return message.conversation_id === conversationId ||
+                       (message.expediteur === utilisateurConnecte.id && message.destinataire === contactId) ||
+                       (message.expediteur === contactId && message.destinataire === utilisateurConnecte.id);
+            }
+        }).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
         
         // Vérifier s'il y a de nouveaux messages
         const ancienNombre = messagesAffiches.length;
@@ -803,6 +1093,7 @@ async function chargerMessages(contactId, type) {
         `;
     }
 }
+
 
 // Fonction pour afficher les messages
 function afficherMessages() {
@@ -924,7 +1215,6 @@ function isNouveauMessage(message) {
     return diffMinutes < 1; // Message de moins d'une minute = nouveau
 }
 
-// Fonction améliorée pour envoyer un message
 async function envoyerMessage() {
     const messageInput = document.getElementById('messageInput');
     const btnEnvoyer = document.getElementById('btnEnvoyerMessage');
@@ -937,13 +1227,22 @@ async function envoyerMessage() {
     // Créer un ID temporaire pour le message
     const messageTemporaireId = `msg_temp_${Date.now()}`;
     
+    // Déterminer l'ID de conversation et le destinataire
+    let conversationId, destinataire;
+    if (conversationActive.type === 'groupe') {
+        conversationId = `conv_group_${conversationActive.id}`;
+        destinataire = null; // Pas de destinataire spécifique pour les groupes
+    } else {
+        conversationId = genererIdConversation(utilisateurConnecte.id, conversationActive.id);
+        destinataire = conversationActive.id;
+    }
+    
     // Créer l'objet message temporaire pour affichage immédiat
     const messageTemporaire = {
         id: messageTemporaireId,
-        conversation_id: conversationActive.type === 'groupe' ? 
-            `conv_group_${conversationActive.id}` : 
-            `conv_contact_${conversationActive.id}`,
+        conversation_id: conversationId,
         expediteur: utilisateurConnecte.id,
+        destinataire: destinataire,
         contenu: {
             type: "texte",
             texte: texteMessage,
@@ -1008,10 +1307,12 @@ async function envoyerMessage() {
                 afficherMessages();
             }
             
-            // Simuler la livraison après un délai
-            setTimeout(() => {
-                marquerCommeLivre(nouveauMessage.id);
-            }, 1000 + Math.random() * 2000);
+            // Marquer automatiquement comme livré pour les messages individuels
+            if (conversationActive.type !== 'groupe') {
+                setTimeout(() => {
+                    marquerCommeLivre(nouveauMessage.id);
+                }, 1000 + Math.random() * 2000);
+            }
             
             // Démarrer un refresh rapide pour voir les réponses
             demarrerRefreshRapide();
@@ -1039,6 +1340,7 @@ async function envoyerMessage() {
         messageInput.focus();
     }
 }
+
 // Fonction pour marquer un message comme livré
 async function marquerCommeLivre(messageId) {
     try {
@@ -1188,3 +1490,23 @@ function afficherNotificationErreur(message) {
 }
 
  
+function genererIdConversation(userId1, userId2) {
+    // Trier les IDs pour garantir un ID de conversation cohérent
+    const ids = [userId1, userId2].sort();
+    return `conv_${ids[0]}_${ids[1]}`;
+}
+
+
+// Fonction pour obtenir les informations d'un utilisateur
+async function obtenirUtilisateur(userId) {
+    try {
+        const response = await fetch(URL_UTILISATEURS);
+        const utilisateurs = await response.json();
+        return utilisateurs.find(u => u.id === userId);
+    } catch (error) {
+        console.error("Erreur lors de la récupération de l'utilisateur:", error);
+        return null;
+    }
+}
+
+

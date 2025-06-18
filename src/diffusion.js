@@ -343,45 +343,54 @@ async function envoyerDiffusion() {
         const utilisateurConnecte = JSON.parse(localStorage.getItem('utilisateurConnecte') || '{}');
         const promessesEnvoi = [];
         
-        // Créer une promesse d'envoi pour chaque destinataire
-        destinatairesSelectionnes.forEach(destinataire => {
-            const conversationId = destinataire.type === 'groupe' ? 
-                `conv_group_${destinataire.id}` : 
-                `conv_contact_${destinataire.id}`;
-            
-            const message = {
-                id: `msg_${Date.now()}_${destinataire.id}`,
-                conversation_id: conversationId,
-                expediteur: utilisateurConnecte.id,
-                contenu: {
-                    type: "texte",
-                    texte: messageTexte,
-                    mise_en_forme: []
-                },
-                timestamp: new Date().toISOString(),
-                statut: {
-                    envoye: true,
-                    livre: false,
-                    lu: false,
-                    timestamp_lecture: null
-                },
-                reponse_a: null,
-                transfere_de: null,
-                reactions: [],
-                ephemere: false,
-                diffusion: true // Marquer comme message de diffusion
-            };
-            
-            promessesEnvoi.push(
-                fetch(URL_MESSAGES, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(message)
-                })
-            );
-        });
+       destinatairesSelectionnes.forEach(destinataire => {
+    let conversationId;
+    
+    if (destinataire.type === 'groupe') {
+        conversationId = `conv_group_${destinataire.id}`;
+    } else {
+        // Pour les contacts, créer un ID de conversation unique basé sur les deux utilisateurs
+        const currentUserId = utilisateurConnecte.id;
+        const contactId = destinataire.id;
+        
+        // Générer un ID de conversation cohérent (toujours dans le même ordre)
+        const ids = [currentUserId, contactId].sort();
+        conversationId = `conv_${ids[0]}_${ids[1]}`;
+    }
+    
+    const message = {
+        id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        conversation_id: conversationId,
+        expediteur: utilisateurConnecte.id,
+        contenu: {
+            type: "texte",
+            texte: messageTexte,
+            mise_en_forme: []
+        },
+        timestamp: new Date().toISOString(),
+        statut: {
+            envoye: true,
+            livre: false,
+            lu: false,
+            timestamp_lecture: null
+        },
+        reponse_a: null,
+        transfere_de: null,
+        reactions: [],
+        ephemere: false,
+        diffusion: true
+    };
+    
+    promessesEnvoi.push(
+        fetch(URL_MESSAGES, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        })
+    );
+});
         
         // Attendre que tous les messages soient envoyés
         const resultats = await Promise.allSettled(promessesEnvoi);
